@@ -1,13 +1,10 @@
 import React, { Component } from 'react';
+import List from './components/List'
 import fetchMovies from './utils/fetchMovies'
 import fetchSeries from './utils/fetchSeries'
 import './App.css';
 
 class App extends Component {
-  state: State = {
-      movies: [],
-      series: []
-  };
   constructor(props) {
     super(props);
     this.state = {
@@ -41,23 +38,20 @@ class App extends Component {
         <div className="App-body">
           <div className="Movies-container">
             <button onClick={() => this.getMoovies()}>
-              Fetch movies
+              Découvrir les films
             </button>
-            <ul>
-              {this.state.movies.map(function(movie, index){
-                return <h1 key={index}>{movie.title}</h1>
-              })}
-            </ul>
+            <List list={this.state.movies}></List>
           </div>
           <div className="Series-container">
             <button onClick={() => this.getSeries()}>
-              Fetch series
+              Découvrir les series
             </button>
-            <ul>
+            <List list={this.state.series}></List>
+            {/* <ul>
               {this.state.series.map(function(serie, index){
                 return <h1 key={index}>{serie.name}</h1>
               })}
-            </ul>
+            </ul> */}
           </div>
         </div>
       </div>

@@ -29,8 +29,14 @@
   justify-content: space-around;
 }
 
-.Movies-container{
+.Movies-container, .Series-container{
+  width: 400px;
   height: 400px;
+  color: white;
+}
+.Movies-container, .Series-container ul{
+  height: 400px;
+  overflow-y: scroll;
 }
 
 @keyframes App-logo-spin {

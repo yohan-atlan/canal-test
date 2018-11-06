@@ -1,13 +1,20 @@
 // @flow
 import React from 'react'
 
-type Props = {
-  list: object,
-};
-
-const List = ({ list }: Props) => (
-  
-)
-
-List.defaultProps = { list: [] }
+class List extends React.Component {
+  static defaultProps = {
+    list: Array
+  }
+  render() {
+    const list = this.props.list;
+    const listItems = list.map((item) =>
+      <li>{item.title}</li>
+    );
+    return (
+      <ul>
+        {listItems}
+      </ul>
+    );
+  }
+}
 export default List

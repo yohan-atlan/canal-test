@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import fetchMovies from './utils/fetchMovies'
+import fetchSeries from './utils/fetchSeries'
 import './App.css';
 
 class App extends Component {
@@ -14,44 +16,50 @@ class App extends Component {
     }
   }
   getMoovies() {
-    fetch('https://api.themoviedb.org/3/movie/popular?api_key=92b418e837b833be308bbfb1fb2aca1e&language=en-US&page=1')
-    .then(results => {
-        return results.json()
-    })
-    .then(results => {
-      this.setState({movies: results.results})
-    })
+    fetchMovies()
+      .then(results => {
+        this.setState({movies: results})
+      })
+      .catch(err => {
+        console.log(err);
+      });
   }
   getSeries() {
-    fetch('https://api.themoviedb.org/3/tv/popular?api_key=92b418e837b833be308bbfb1fb2aca1e&language=fr-FR&page=1')
-    .then(results => {
-        return results.json()
-    })
-    .then(results => {
-      this.setState({series: results.results})
-    })
+    fetchSeries()
+      .then(results => {
+        this.setState({series: results})
+      })
+      .catch(err => {
+        console.log(err);
+      });
   }
   render() {
     return (
       <div className="App">
         <header className="App-header">
-          <button onClick={() => this.getMoovies()}>
-            Fetch movies
-          </button>
-          <button onClick={() => this.getSeries()}>
-            Fetch series
-          </button>
-          <ul>
-            {this.state.movies.map(function(movie, index){
-              return <h1 key={index}>{movie.title}</h1>
-            })}
-          </ul>
-          <ul>
-            {this.state.series.map(function(serie, index){
-              return <h1 key={index}>{serie.name}</h1>
-            })}
-          </ul>
         </header>
+        <div className="App-body">
+          <div className="Movies-container">
+            <button onClick={() => this.getMoovies()}>
+              Fetch movies
+            </button>
+            <ul>
+              {this.state.movies.map(function(movie, index){
+                return <h1 key={index}>{movie.title}</h1>
+              })}
+            </ul>
+          </div>
+          <div className="Series-container">
+            <button onClick={() => this.getSeries()}>
+              Fetch series
+            </button>
+            <ul>
+              {this.state.series.map(function(serie, index){
+                return <h1 key={index}>{serie.name}</h1>
+              })}
+            </ul>
+          </div>
+        </div>
       </div>
     );
   }

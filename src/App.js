@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import List from './components/List'
 import Container from './components/Container'
 import fetchMovies from './utils/fetchMovies'
 import fetchSeries from './utils/fetchSeries'

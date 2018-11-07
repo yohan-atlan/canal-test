@@ -1,19 +1,25 @@
 // @flow
 import React from 'react'
+import './style.css'
 
 class List extends React.Component {
   static defaultProps = {
-    list: Array
+    list: Array,
+    type: String
   }
   render() {
     const list = this.props.list;
-    const listItems = list.map((item) =>
-      <li>{item.title}</li>
-    );
+    const type = this.props.type;
     return (
-      <ul>
-        {listItems}
-      </ul>
+      <div className="list">
+        {list.map(function(item, index){
+            if (type === "movie"){
+              return <h1 key={index}>{item.title}</h1>
+            } else {
+              return <h1 key={index}>{item.name}</h1>
+            }
+        })}
+      </div>
     );
   }
 }

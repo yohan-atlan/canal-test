@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import List from './components/List'
+import Container from './components/Container'
 import fetchMovies from './utils/fetchMovies'
 import fetchSeries from './utils/fetchSeries'
 import './App.css';
@@ -36,23 +37,8 @@ class App extends Component {
         <header className="App-header">
         </header>
         <div className="App-body">
-          <div className="Movies-container">
-            <button onClick={() => this.getMoovies()}>
-              Découvrir les films
-            </button>
-            <List list={this.state.movies}></List>
-          </div>
-          <div className="Series-container">
-            <button onClick={() => this.getSeries()}>
-              Découvrir les series
-            </button>
-            <List list={this.state.series}></List>
-            {/* <ul>
-              {this.state.series.map(function(serie, index){
-                return <h1 key={index}>{serie.name}</h1>
-              })}
-            </ul> */}
-          </div>
+          <Container fetchType={() => this.getMoovies()} list={this.state.movies} type="movie"></Container>
+          <Container fetchType={() => this.getSeries()} list={this.state.series} type="serie"></Container>
         </div>
       </div>
     );

@@ -8,7 +8,7 @@ const fetchMovies = () => {
         return payload.json();
       })
       .then(data => {
-        if (data.results.length == 0) {
+        if (data.results.length === 0) {
           reject(data);
         } else {
           resolve(data.results);

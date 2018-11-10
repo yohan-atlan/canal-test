@@ -9,11 +9,13 @@ class App extends Component {
     super(props);
     this.state = {
       movies: [],
-      series: []
+      series: [],
+      moviePage: 1,
+      seriePage: 1
     }
   }
-  getMoovies() {
-    fetchMovies()
+  getMoovies(page) {
+    fetchMovies(page)
       .then(results => {
         this.setState({movies: results})
       })
@@ -21,8 +23,8 @@ class App extends Component {
         console.log(err);
       });
   }
-  getSeries() {
-    fetchSeries()
+  getSeries(page) {
+    fetchSeries(page)
       .then(results => {
         this.setState({series: results})
       })
@@ -30,14 +32,44 @@ class App extends Component {
         console.log(err);
       });
   }
+  nextPage = (type) => {
+    if (type === 'movie'){
+      this.setState(({ moviePage }) => ({
+        moviePage: moviePage + 1
+      }));
+      this.getMoovies(this.state.moviePage);
+    } else if (type === 'serie') {
+      this.setState(({ seriePage }) => ({
+        seriePage: seriePage + 1
+      }));
+      this.getSeries(this.state.seriePage);
+    }
+  };
+  prevPage = (type) => {
+    if (type === 'movie'){
+      if (this.state.moviePage > 1) {
+        this.setState(({ moviePage }) => ({
+          moviePage: moviePage - 1
+        }));
+      }
+      this.getMoovies(this.state.moviePage);
+    } else if (type === 'serie') {
+      if (this.state.seriePage > 1) {
+        this.setState(({ seriePage }) => ({
+          seriePage: seriePage - 1
+        }));
+      }
+      this.getSeries(this.state.seriePage);
+    }
+  };
   render() {
     return (
       <div className="App">
         <header className="App-header">
         </header>
         <div className="App-body">
-          <Container fetchType={() => this.getMoovies()} list={this.state.movies} type="movie"></Container>
-          <Container fetchType={() => this.getSeries()} list={this.state.series} type="serie"></Container>
+          <Container fetchType={() => this.getMoovies()} list={this.state.movies} nextPage={() => this.nextPage('movie')}prevPage={() => this.prevPage('movie')} type="movie"></Container>
+          <Container fetchType={() => this.getSeries()} list={this.state.series} prevPage={() => this.prevPage('serie')}nextPage={() => this.nextPage('serie')}type="serie"></Container>
         </div>
       </div>
     );

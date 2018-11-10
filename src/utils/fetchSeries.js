@@ -1,9 +1,9 @@
 // @flow
 import { API_KEY } from "../core/constants";
 
-const fetchSeries = () => {
+const fetchSeries = (page) => {
   return new Promise((resolve, reject) => {
-    fetch(`https://api.themoviedb.org/3/tv/popular?api_key=${API_KEY}&language=fr-FR&page=1`)
+    fetch(`https://api.themoviedb.org/3/tv/popular?api_key=${API_KEY}&language=fr-FR&page=${page}`)
       .then(payload => {
         return payload.json();
       })

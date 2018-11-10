@@ -9,15 +9,18 @@ class Container extends React.Component {
     type: String
   }
   render() {
-    const list = this.props.list
-    const fetchType = this.props.fetchType
-    const type = this.props.type
     return (
       <div className="container">
-        <button onClick={fetchType}>
-          Découvrir les films
+        <button onClick={this.props.fetchType}>
+          { this.props.type === 'movie' ? 'Découvrir les films' : 'Découvrir les series'}
         </button>
-        <List list={list} type={type}></List>
+        <List list={this.props.list} type={this.props.type}></List>
+        <button onClick={this.props.prevPage}>
+          Page précédente
+        </button>
+        <button onClick={this.props.nextPage}>
+          Page suivante
+        </button>
       </div>
     );
   }

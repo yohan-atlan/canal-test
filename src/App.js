@@ -11,13 +11,15 @@ class App extends Component {
       movies: [],
       series: [],
       moviePage: 1,
-      seriePage: 1
+      seriePage: 1,
+      movieClicked: false,
+      serieClicked: false
     }
   }
   getMovies(page) {
     fetchMovies(page)
       .then(results => {
-        this.setState({movies: results})
+        this.setState({ movies: results, movieClicked: true })
       })
       .catch(err => {
         console.log(err);
@@ -26,7 +28,7 @@ class App extends Component {
   getSeries(page) {
     fetchSeries(page)
       .then(results => {
-        this.setState({ series: results })
+        this.setState({ series: results, serieClicked: true })
       })
       .catch(err => {
         console.log(err);
@@ -64,8 +66,8 @@ class App extends Component {
         <header className="App-header">
         </header>
         <div className="App-body">
-          <Container fetchType={() => this.getMovies()} list={this.state.movies} nextPage={() => this.nextPage('movie')}prevPage={() => this.prevPage('movie')} type="movie"></Container>
-          <Container fetchType={() => this.getSeries()} list={this.state.series} prevPage={() => this.prevPage('serie')}nextPage={() => this.nextPage('serie')}type="serie"></Container>
+          <Container fetchType={() => this.getMovies()} list={this.state.movies} nextPage={() => this.nextPage('movie')}prevPage={() => this.prevPage('movie')} type="movie" clicked={this.state.movieClicked}></Container>
+          <Container fetchType={() => this.getSeries()} list={this.state.series} prevPage={() => this.prevPage('serie')}nextPage={() => this.nextPage('serie')} type="serie" clicked={this.state.serieClicked}></Container>
         </div>
       </div>
     );

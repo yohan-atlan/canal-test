@@ -5,8 +5,8 @@ import fetchSeries from './utils/fetchSeries'
 import './App.css';
 
 class App extends Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     this.state = {
       movies: [],
       series: [],
@@ -14,7 +14,7 @@ class App extends Component {
       seriePage: 1
     }
   }
-  getMoovies(page) {
+  getMovies(page) {
     fetchMovies(page)
       .then(results => {
         this.setState({movies: results})
@@ -26,7 +26,7 @@ class App extends Component {
   getSeries(page) {
     fetchSeries(page)
       .then(results => {
-        this.setState({series: results})
+        this.setState({ series: results })
       })
       .catch(err => {
         console.log(err);
@@ -34,32 +34,28 @@ class App extends Component {
   }
   nextPage = (type) => {
     if (type === 'movie'){
-      this.setState(({ moviePage }) => ({
-        moviePage: moviePage + 1
-      }));
-      this.getMoovies(this.state.moviePage);
+      this.setState({moviePage: this.state.moviePage + 1}, function () {
+        this.getMovies(this.state.moviePage);
+      });
     } else if (type === 'serie') {
-      this.setState(({ seriePage }) => ({
-        seriePage: seriePage + 1
-      }));
-      this.getSeries(this.state.seriePage);
+      this.setState({seriePage: this.state.seriePage + 1}, function () {
+        this.getSeries(this.state.seriePage);
+      });
     }
   };
   prevPage = (type) => {
     if (type === 'movie'){
       if (this.state.moviePage > 1) {
-        this.setState(({ moviePage }) => ({
-          moviePage: moviePage - 1
-        }));
+        this.setState({moviePage: this.state.moviePage - 1}, function () {
+          this.getMovies(this.state.moviePage);
+        });
       }
-      this.getMoovies(this.state.moviePage);
     } else if (type === 'serie') {
       if (this.state.seriePage > 1) {
-        this.setState(({ seriePage }) => ({
-          seriePage: seriePage - 1
-        }));
+        this.setState({seriePage: this.state.seriePage - 1}, function () {
+          this.getSeries(this.state.seriePage);
+        });
       }
-      this.getSeries(this.state.seriePage);
     }
   };
   render() {
@@ -68,7 +64,7 @@ class App extends Component {
         <header className="App-header">
         </header>
         <div className="App-body">
-          <Container fetchType={() => this.getMoovies()} list={this.state.movies} nextPage={() => this.nextPage('movie')}prevPage={() => this.prevPage('movie')} type="movie"></Container>
+          <Container fetchType={() => this.getMovies()} list={this.state.movies} nextPage={() => this.nextPage('movie')}prevPage={() => this.prevPage('movie')} type="movie"></Container>
           <Container fetchType={() => this.getSeries()} list={this.state.series} prevPage={() => this.prevPage('serie')}nextPage={() => this.nextPage('serie')}type="serie"></Container>
         </div>
       </div>
